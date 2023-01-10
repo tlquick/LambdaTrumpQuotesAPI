@@ -9,3 +9,4 @@ Uses AWS Lambda and API Gateway:
 
 - upgrade: connect directly to mongoDB from the lambda function and get a random quote - tag version 2.0 - fork, npm i, create .env with MONGODB_URI, test with node index.js, zip, upload to lambda, set environment variable for MONGODB_URI, create an API gateway to expose end point (if not already done) <br>
   ![LambdaMongo](/images/lambda_mongo.png?raw=true "mongo") <br>
+Live Demo:  https://2bx2yqdk5k.execute-api.ap-southeast-2.amazonaws.com/default/TrumpQuote
