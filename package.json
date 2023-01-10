@@ -1,6 +1,9 @@
 {
   "dependencies": {
     "aws-sdk": "^2.1291.0",
-    "axios": "^1.2.2"
+    "mongodb": "latest"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
   }
 }

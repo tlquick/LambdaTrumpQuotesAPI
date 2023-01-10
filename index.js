@@ -1,9 +1,27 @@
-const axios = require('axios');
+if(process.env.NODE_ENV != 'production'){
+  require('dotenv').config();
+}
+const MongoClient = require("mongodb").MongoClient;
+let cachedDb = null;
+
+async function connectToDatabase() {
+  if (cachedDb) {
+    return cachedDb;
+  }
+  const client = await MongoClient.connect(process.env.MONGODB_URI);
+  const db = await client.db("Trump"); //or Trump?
+
+  cachedDb = db;
+  return db;
+}
 exports.handler = async function (event, context) {
+  //just get 1 random quote from the db
     try {
-    const response = await axios.get("https://trumpquoteapi.onrender.com/random", { headers: { Accept: "application/json" } });
-    const data = response.data;
-    console.log("MY DATA returned a topic of  " + data.topic);
+      const db = await connectToDatabase();
+      const quotes = await db.collection("quotes").find({}).limit(20).toArray();
+      const random = (Math.floor((Math.random() * quotes.length) + 1));
+      data = quotes[random];
+      console.log(data);
     return {
       statusCode: 200,
       body: JSON.stringify({ topic: data.topic, year: data.year,  quote: data.quote})
